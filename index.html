@@ -3,8 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>John Doe | Portfolio</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Portfolio</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; line-height: 1.6; }
+
+    .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: #333; color: #fff; }
+    .logo { font-size: 1.3rem; }
+    .nav-links { list-style: none; display: flex; gap: 15px; }
+    .nav-links a { color: #fff; text-decoration: none; font-weight: bold; }
+
+    section { padding: 40px 20px; max-width: 1000px; margin: auto; }
+    .hidden { display: none; }
+
+    /* About */
+    .about { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
+    .profile-pic { width: 150px; border-radius: 50%; }
+
+    /* Skills */
+    .skills .skill { margin-bottom: 15px; }
+    .progress { background: #ddd; border-radius: 20px; overflow: hidden; height: 10px; }
+    .progress div { background: #333; height: 100%; }
+
+    /* Projects */
+    .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .project-card { display: block; border: 1px solid #ccc; border-radius: 10px; overflow: hidden; text-decoration: none; color: inherit; background: #fafafa; cursor: pointer; }
+    .project-card img { width: 100%; display: block; }
+    .project-card h3 { padding: 10px; }
+    .project-card p { padding: 0 10px 10px; font-size: 0.9rem; }
+
+    /* Project Detail */
+    .project-slider { max-width: 800px; margin: 20px auto; position: relative; }
+    .slider { position: relative; overflow: hidden; border-radius: 10px; }
+    .slide { display: none; }
+    .slide.active { display: block; }
+    .slide img { width: 100%; border-radius: 10px; }
+    .slider-dots { text-align: center; margin-top: 10px; }
+    .dot { height: 12px; width: 12px; margin: 0 5px; display: inline-block; border-radius: 50%; background: #bbb; cursor: pointer; }
+    .dot.active { background: #333; }
+
+    .project-description { max-width: 800px; margin: 20px auto; padding: 20px; }
+    .project-link { display: inline-block; margin-top: 10px; color: #333; font-weight: bold; text-decoration: none; }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .about { flex-direction: column; text-align: center; }
+      .header { flex-direction: column; gap: 10px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -13,64 +59,117 @@
     <h1 class="logo">John Doe</h1>
     <nav>
       <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
+        <li><a href="#" onclick="showSection('home')">Home</a></li>
+        <li><a href="#about" onclick="showSection('home')">About</a></li>
+        <li><a href="#skills" onclick="showSection('home')">Skills</a></li>
+        <li><a href="#projects" onclick="showSection('home')">Projects</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- About -->
-  <section id="about" class="about">
-    <img src="images/profile.png" alt="Profile picture" class="profile-pic">
-    <div>
-      <h2>About</h2>
+  <!-- Home Section -->
+  <main id="home">
+    <!-- About -->
+    <section id="about" class="about">
+      <img src="https://via.placeholder.com/150" alt="Profile picture" class="profile-pic">
+      <div>
+        <h2>About</h2>
+        <p>
+          I am a BCA student with a passion for building applications and solving problems.
+          (➡ Replace this text with your own).
+        </p>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="skills">
+      <h2>Skills</h2>
+      <div class="skill"><span>HTML</span><div class="progress"><div style="width:90%"></div></div></div>
+      <div class="skill"><span>CSS</span><div class="progress"><div style="width:70%"></div></div></div>
+      <div class="skill"><span>JavaScript</span><div class="progress"><div style="width:60%"></div></div></div>
+      <div class="skill"><span>Python</span><div class="progress"><div style="width:65%"></div></div></div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="projects">
+      <h2>Projects</h2>
+      <div class="project-grid">
+        <div class="project-card" onclick="showSection('project-detail')">
+          <img src="https://via.placeholder.com/400x250" alt="Project One">
+          <h3>Project One</h3>
+          <p>Brief description of Project One.</p>
+        </div>
+        <div class="project-card" onclick="showSection('project-detail')">
+          <img src="https://via.placeholder.com/400x250" alt="Project Two">
+          <h3>Project Two</h3>
+          <p>Brief description of Project Two.</p>
+        </div>
+        <div class="project-card" onclick="showSection('project-detail')">
+          <img src="https://via.placeholder.com/400x250" alt="Project Three">
+          <h3>Project Three</h3>
+          <p>Brief description of Project Three.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Project Detail Section -->
+  <main id="project-detail" class="hidden">
+    <section class="project-slider">
+      <div class="slider">
+        <div class="slide active"><img src="https://via.placeholder.com/800x400" alt="Screenshot 1"></div>
+        <div class="slide"><img src="https://via.placeholder.com/800x400" alt="Screenshot 2"></div>
+        <div class="slide"><img src="https://via.placeholder.com/800x400" alt="Screenshot 3"></div>
+      </div>
+      <div class="slider-dots"></div>
+    </section>
+
+    <section class="project-description">
+      <h2>Project Description</h2>
       <p>
-        I am a BCA student with a passion for building applications and solving problems.
-        (➡ Replace this text with your own).
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Replace this with your own project details.
       </p>
-    </div>
-  </section>
+      <a href="https://www.example.com" class="project-link">www.example.com</a><br><br>
+      <button onclick="showSection('home')">⬅ Back to Home</button>
+    </section>
+  </main>
 
-  <!-- Skills -->
-  <section id="skills" class="skills">
-    <h2>Skills</h2>
-    <div class="skill">
-      <span>HTML</span>
-      <div class="progress"><div style="width: 90%"></div></div>
-    </div>
-    <div class="skill">
-      <span>CSS</span>
-      <div class="progress"><div style="width: 70%"></div></div>
-    </div>
-    <div class="skill">
-      <span>JavaScript</span>
-      <div class="progress"><div style="width: 60%"></div></div>
-    </div>
-    <div class="skill">
-      <span>Python</span>
-      <div class="progress"><div style="width: 65%"></div></div>
-    </div>
-  </section>
+  <script>
+    // Section toggle
+    function showSection(id) {
+      document.getElementById('home').classList.add('hidden');
+      document.getElementById('project-detail').classList.add('hidden');
+      document.getElementById(id).classList.remove('hidden');
+      if (id === 'project-detail') initSlider();
+    }
 
-  <!-- Projects -->
-  <section id="projects" class="projects">
-    <h2>Projects</h2>
-    <div class="project-grid">
-      <a href="project.html" class="project-card">
-        <img src="images/project1.png" alt="Project One">
-        <h3>Project One</h3>
-        <p>Brief description of Project One.</p>
-      </a>
-      <a href="project.html" class="project-card">
-        <img src="images/project2.png" alt="Project Two">
-        <h3>Project Two</h3>
-        <p>Brief description of Project Two.</p>
-      </a>
-      <a href="project.html" class="project-card">
-        <img src="images/project3.png" alt="Project Three">
-        <h3>Project Three</h3>
-        <p>Brief description of Project Three.</p>
+    // Slider
+    let slides, dots, currentIndex;
+    function initSlider() {
+      slides = document.querySelectorAll('.slide');
+      const dotsContainer = document.querySelector('.slider-dots');
+      dotsContainer.innerHTML = "";
+      currentIndex = 0;
+      slides.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.classList.add('dot');
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => showSlide(i));
+        dotsContainer.appendChild(dot);
+      });
+      dots = document.querySelectorAll('.dot');
+    }
+    function showSlide(index) {
+      slides[currentIndex].classList.remove('active');
+      dots[currentIndex].classList.remove('active');
+      currentIndex = index;
+      slides[currentIndex].classList.add('active');
+      dots[currentIndex].classList.add('active');
+    }
+  </script>
+
+</body>
+</html>        <p>Brief description of Project Three.</p>
       </a>
     </div>
   </section>
