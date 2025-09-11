@@ -32,9 +32,125 @@
     .project-card h3 { padding: 10px; }
     .project-card p { padding: 0 10px 10px; font-size: 0.9rem; }
 
-    /* Project Detail */
+    /* Project Detail Carousel */
     .project-slider { max-width: 800px; margin: 20px auto; position: relative; }
     .slider { position: relative; overflow: hidden; }
+    .slides { display: flex; transition: transform 0.4s ease-in-out; }
+    .slides img { width: 100%; flex-shrink: 0; border-radius: 10px; }
+
+    /* Arrows */
+    .arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: #fff; border: none; padding: 10px; cursor: pointer; border-radius: 50%; }
+    .arrow.left { left: 10px; }
+    .arrow.right { right: 10px; }
+
+    /* Dots */
+    .dots { text-align: center; margin-top: 10px; }
+    .dot { height: 12px; width: 12px; margin: 0 4px; background-color: #bbb; border-radius: 50%; display: inline-block; cursor: pointer; }
+    .active { background-color: #333; }
+
+    @media(max-width:768px){
+      .about { flex-direction: column; text-align: center; }
+      .header { flex-direction: column; gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">My Portfolio</div>
+    <ul class="nav-links">
+      <li><a onclick="showPage('home')">Home</a></li>
+      <li><a onclick="showPage('projects')">Projects</a></li>
+    </ul>
+  </header>
+
+  <!-- Home -->
+  <section id="home">
+    <h1>Welcome to My Portfolio</h1>
+    <div class="about">
+      <img src="Ghost.png" alt="Profile" class="profile-pic">
+      <p>About me text goes here...</p>
+    </div>
+
+    <h2>Skills</h2>
+    <div class="skills">
+      <div class="skill"><p>HTML</p><div class="progress"><div style="width:90%"></div></div></div>
+      <div class="skill"><p>CSS</p><div class="progress"><div style="width:80%"></div></div></div>
+      <div class="skill"><p>JavaScript</p><div class="progress"><div style="width:70%"></div></div></div>
+    </div>
+
+    <h2>Projects</h2>
+    <div class="project-grid">
+      <div class="project-card" onclick="showPage('project-detail')">
+        <img src="Ghost.png" alt="Project">
+        <h3>Project Title</h3>
+        <p>Short description...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project Detail -->
+  <section id="project-detail" class="hidden">
+    <h1>Project Detail</h1>
+    <div class="project-slider">
+      <div class="slider" id="slider">
+        <div class="slides" id="slides">
+          <img src="Ghost.png" alt="Screenshot 1">
+          <img src="Ghost.png" alt="Screenshot 2">
+          <img src="Ghost.png" alt="Screenshot 3">
+        </div>
+        <button class="arrow left" onclick="moveToSlide(currentIndex-1)">&#10094;</button>
+        <button class="arrow right" onclick="moveToSlide(currentIndex+1)">&#10095;</button>
+      </div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <button onclick="showPage('home')">← Back</button>
+  </section>
+
+  <script>
+    // Page switcher
+    function showPage(page){
+      document.getElementById("home").classList.add("hidden");
+      document.getElementById("project-detail").classList.add("hidden");
+      document.getElementById(page).classList.remove("hidden");
+    }
+
+    // Slider logic
+    const slides = document.getElementById('slides');
+    const dotsContainer = document.getElementById('dots');
+    const totalSlides = slides.children.length;
+    let currentIndex = 0;
+
+    // Create dots
+    for(let i=0;i<totalSlides;i++){
+      const dot = document.createElement('span');
+      dot.classList.add('dot');
+      if(i===0) dot.classList.add('active');
+      dot.addEventListener('click', ()=>moveToSlide(i));
+      dotsContainer.appendChild(dot);
+    }
+
+    function moveToSlide(index){
+      if(index<0) index=totalSlides-1;
+      if(index>=totalSlides) index=0;
+      slides.style.transform = `translateX(-${index*100}%)`;
+      dotsContainer.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active', i===index));
+      currentIndex=index;
+    }
+
+    // Swipe support
+    let startX=0, endX=0;
+    slides.addEventListener('touchstart',(e)=>startX=e.touches[0].clientX);
+    slides.addEventListener('touchend',(e)=>{
+      endX=e.changedTouches[0].clientX;
+      if(startX-endX>50){ moveToSlide(currentIndex+1); }
+      if(endX-startX>50){ moveToSlide(currentIndex-1); }
+    });
+  </script>
+
+</body>
+</html>    .slider { position: relative; overflow: hidden; }
     .slides { display: flex; transition: transform 0.4s ease-in-out; }
     .slides img { width: 100%; flex-shrink: 0; }
     .dots { text-align: center; margin-top: 10px; }
